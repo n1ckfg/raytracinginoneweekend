@@ -1,5 +1,4 @@
-#ifndef MATERIALH
-#define MATERIALH 
+#pragma once
 
 struct hit_record;
 
@@ -108,7 +107,6 @@ class dielectric : public material {
         float ref_idx;
 };
 
-#endif
 
 
 

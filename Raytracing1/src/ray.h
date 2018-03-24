@@ -1,5 +1,5 @@
-#ifndef RAYH
-#define RAYH
+#pragma once
+
 #include "vec3.h"
 
 class ray {
@@ -16,6 +16,6 @@ class ray {
 
 };
 
-#endif 
+ 
 
 

@@ -1,5 +1,4 @@
-#ifndef HITABLEH
-#define HITABLEH 
+#pragma once
 
 #include "ray.h"
 
@@ -19,7 +18,7 @@ class hitable  {
 
 };
 
-#endif
+
 
 
 
