@@ -3,7 +3,8 @@
 
 #include "hitable.h"
 
-class sphere: public hitable  {
+class sphere: public hitable {
+
     public:
         sphere() {}
         sphere(vec3 cen, float r, material *m) : center(cen), radius(r), mat_ptr(m)  {};
@@ -11,6 +12,7 @@ class sphere: public hitable  {
         vec3 center;
         float radius;
         material *mat_ptr;
+
 };
 
 bool sphere::hit(const ray& r, float t_min, float t_max, hit_record& rec) const {
@@ -39,7 +41,6 @@ bool sphere::hit(const ray& r, float t_min, float t_max, hit_record& rec) const 
     }
     return false;
 }
-
 
 #endif
 

@@ -11,6 +11,7 @@ vec3 random_in_unit_disk() {
 }
 
 class camera {
+
     public:
         camera(vec3 lookfrom, vec3 lookat, vec3 vup, float vfov, float aspect, float aperture, float focus_dist) { // vfov is top to bottom in degrees
             lens_radius = aperture / 2;
@@ -25,6 +26,7 @@ class camera {
             horizontal = 2*half_width*focus_dist*u;
             vertical = 2*half_height*focus_dist*v;
         }
+
         ray get_ray(float s, float t) {
             vec3 rd = lens_radius*random_in_unit_disk();
             vec3 offset = u * rd.x() + v * rd.y();
@@ -37,7 +39,9 @@ class camera {
         vec3 vertical;
         vec3 u, v, w;
         float lens_radius;
+
 };
+
 #endif
 
 

@@ -5,7 +5,6 @@
 #include "camera.h"
 #include "material.h"
 
-
 vec3 color(const ray& r, hitable *world, int depth) {
     hit_record rec;
     if (world->hit(r, 0.001, MAXFLOAT, rec)) { 
@@ -13,18 +12,15 @@ vec3 color(const ray& r, hitable *world, int depth) {
         vec3 attenuation;
         if (depth < 50 && rec.mat_ptr->scatter(r, rec, attenuation, scattered)) {
              return attenuation*color(scattered, world, depth+1);
-        }
-        else {
+        } else {
             return vec3(0,0,0);
         }
-    }
-    else {
+    } else {
         vec3 unit_direction = unit_vector(r.direction());
         float t = 0.5*(unit_direction.y() + 1.0);
         return (1.0-t)*vec3(1.0, 1.0, 1.0) + t*vec3(0.5, 0.7, 1.0);
     }
 }
-
 
 hitable *random_scene() {
     int n = 500;
@@ -38,12 +34,10 @@ hitable *random_scene() {
             if ((center-vec3(4,0.2,0)).length() > 0.9) { 
                 if (choose_mat < 0.8) {  // diffuse
                     list[i++] = new sphere(center, 0.2, new lambertian(vec3(drand48()*drand48(), drand48()*drand48(), drand48()*drand48())));
-                }
-                else if (choose_mat < 0.95) { // metal
+                } else if (choose_mat < 0.95) { // metal
                     list[i++] = new sphere(center, 0.2,
                             new metal(vec3(0.5*(1 + drand48()), 0.5*(1 + drand48()), 0.5*(1 + drand48())),  0.5*drand48()));
-                }
-                else {  // glass
+                } else {  // glass
                     list[i++] = new sphere(center, 0.2, new dielectric(1.5));
                 }
             }
