@@ -1,10 +1,9 @@
 #pragma once
 
-struct hit_record;
-
 #include "ray.h"
 #include "hitable.h"
 
+struct hit_record;
 
 float schlick(float cosine, float ref_idx) {
     float r0 = (1-ref_idx) / (1+ref_idx);

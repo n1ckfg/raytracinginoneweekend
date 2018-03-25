@@ -25,5 +25,5 @@ class ofApp : public ofBaseApp{
 		int height;
 		ofPixels renderedPixels;
 		shared_ptr<ofTexture> rendered;
-		
+
 };
