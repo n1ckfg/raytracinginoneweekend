@@ -103,10 +103,29 @@ int main() {
 			col[2] *= 255.99;
 
 			points.push_back(col);
-			std::cout << "Rendering... " << (float)counter / (float)(ny * nx) << " | (" << col << ") \n";
+
+			int loc = i + j * nx;
+			std::cout << "RENDERING ";
+			if (loc % 2 == 0) {
+				std::cout << " . ";
+			} else if (loc % 3 == 0) {
+				std::cout << "  .";
+			} else {
+				std::cout << ".  ";
+			}
+			std::cout << " completed: " << int(((float)counter / (float)(ny * nx)) * 100.0) << "% ";
+			if (loc % 2 == 0) {
+				std::cout << " . ";
+			} else if (loc % 3 == 0) {
+				std::cout << ".  ";
+			} else {
+				std::cout << "  .";
+			}
+			std::cout << " color: (" << int(col[0]) << ", " << int(col[1]) << ", " << int(col[2]) << ") \n";
 			counter++;
 		}
 	}
+	std::cout << "RENDERING ... completed: 100%";
 
 	ofSetupOpenGL(nx, ny, OF_WINDOW);			// <-------- setup the GL context
 
