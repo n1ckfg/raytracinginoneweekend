@@ -1,4 +1,9 @@
 #include "ofApp.h"
+#include "vec3.h"
+
+ofApp::ofApp(vector <vec3> _points) {
+	points = _points;
+}
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -8,7 +13,9 @@ void ofApp::setup(){
 	renderedPixels.allocate(width, height, OF_PIXELS_RGBA);
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
-			renderedPixels.setColor(x, y, ofColor::red);
+			int loc = x + y * width;
+			vec3 p = points[loc];
+			renderedPixels.setColor(x, y, ofColor(p[0], p[1], p[2]));
 		}
 	}
 

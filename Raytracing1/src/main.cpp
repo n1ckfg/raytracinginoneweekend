@@ -8,6 +8,8 @@
 #include "camera.h"
 #include "material.h"
 
+vector <vec3> points;
+
 vec3 color(const ray& r, hitable *world, int depth) {
 	hit_record rec;
 	if (world->hit(r, 0.001, FLT_MAX, rec)) { //MAXFLOAT, rec)) { 
@@ -60,8 +62,8 @@ hitable *random_scene() {
 
 //========================================================================
 int main() {
-	int nx = 1200;
-	int ny = 800;
+	int nx = 300; //1200
+	int ny = 200; //800
 	int ns = 10;
 	std::cout << "P3\n" << nx << " " << ny << "\n255\n";
 	hitable *list[5];
@@ -81,6 +83,8 @@ int main() {
 
 	camera cam(lookfrom, lookat, vec3(0, 1, 0), 20, float(nx) / float(ny), aperture, dist_to_focus);
 
+	int counter = 0;
+
 	for (int j = ny - 1; j >= 0; j--) {
 		for (int i = 0; i < nx; i++) {
 			vec3 col(0, 0, 0);
@@ -93,17 +97,21 @@ int main() {
 			}
 			col /= float(ns);
 			col = vec3(sqrt(col[0]), sqrt(col[1]), sqrt(col[2]));
-			int ir = int(255.99*col[0]);
-			int ig = int(255.99*col[1]);
-			int ib = int(255.99*col[2]);
-			std::cout << ir << " " << ig << " " << ib << "\n";
+
+			col[0] *= 255.99;
+			col[1] *= 255.99;
+			col[2] *= 255.99;
+
+			points.push_back(col);
+			std::cout << "Rendering... " << (float)counter / (float)(ny * nx) << " | (" << col << ") \n";
+			counter++;
 		}
 	}
 
-	ofSetupOpenGL(1200, 800, OF_WINDOW);			// <-------- setup the GL context
+	ofSetupOpenGL(nx, ny, OF_WINDOW);			// <-------- setup the GL context
 
 													// this kicks off the running of my app
 													// can be OF_WINDOW or OF_FULLSCREEN
 													// pass in width and height too:
-	ofRunApp(new ofApp());
+	ofRunApp(new ofApp(points));
 }
