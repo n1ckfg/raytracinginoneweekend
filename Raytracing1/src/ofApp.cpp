@@ -11,34 +11,40 @@
 #define M_PI 3.14159265358979323846
 
 //--------------------------------------------------------------
-void ofApp::setup(){
+void ofApp::setup() {
 	nx = ofGetWidth();
 	ny = ofGetHeight();
 	ns = 10;
 
-	std::cout << "P3\n" << nx << " " << ny << "\n255\n";
-	hitable *list[5];
-	float R = cos(M_PI / 4);
-	list[0] = new sphere(vec3(0, 0, -1), 0.5, new lambertian(vec3(0.1, 0.2, 0.5)));
-	list[1] = new sphere(vec3(0, -100.5, -1), 100, new lambertian(vec3(0.8, 0.8, 0.0)));
-	list[2] = new sphere(vec3(1, 0, -1), 0.5, new metal(vec3(0.8, 0.6, 0.2), 0.0));
-	list[3] = new sphere(vec3(-1, 0, -1), 0.5, new dielectric(1.5));
-	list[4] = new sphere(vec3(-1, 0, -1), -0.45, new dielectric(1.5));
-	hitable *world = new hitable_list(list, 5);
-	world = random_scene();
+	//std::cout << "P3\n" << nx << " " << ny << "\n255\n";
 
-	vec3 lookfrom(13, 2, 3);
-	vec3 lookat(0, 0, 0);
-	float dist_to_focus = 10.0;
-	float aperture = 0.1;
-
-	camera cam(lookfrom, lookat, vec3(0, 1, 0), 20, float(nx) / float(ny), aperture, dist_to_focus);
 
 	lineCounter = 0;
 	renderedPixels.allocate(nx, ny, OF_PIXELS_RGBA);
+}
 
-	while (lineCounter < ny) {
+//--------------------------------------------------------------
+void ofApp::update() {
+	if (lineCounter < ny) {
+		vec3 lookfrom(13, 2, 3);
+		vec3 lookat(0, 0, 0);
+		float dist_to_focus = 10.0;
+		float aperture = 0.1;
+		camera cam(lookfrom, lookat, vec3(0, 1, 0), 20, float(nx) / float(ny), aperture, dist_to_focus);
+		
+		hitable *list[5];
+		float R = cos(M_PI / 4);
+		list[0] = new sphere(vec3(0, 0, -1), 0.5, new lambertian(vec3(0.1, 0.2, 0.5)));
+		list[1] = new sphere(vec3(0, -100.5, -1), 100, new lambertian(vec3(0.8, 0.8, 0.0)));
+		list[2] = new sphere(vec3(1, 0, -1), 0.5, new metal(vec3(0.8, 0.6, 0.2), 0.0));
+		list[3] = new sphere(vec3(-1, 0, -1), 0.5, new dielectric(1.5));
+		list[4] = new sphere(vec3(-1, 0, -1), -0.45, new dielectric(1.5));
+		hitable *world = new hitable_list(list, 5);
+		world = random_scene();
+
+
 		int j = lineCounter;
+
 		for (int i = 0; i < nx; i++) {
 			vec3 col(0, 0, 0);
 			for (int s = 0; s < ns; s++) {
@@ -57,36 +63,34 @@ void ofApp::setup(){
 
 			renderedPixels.setColor(i, j, ofColor(col[0], col[1], col[2]));
 		}
-		
-		std::cout << "RENDERING ";
-		if (lineCounter % 2 == 0) {
-			std::cout << " . ";
-		}
-		else if (lineCounter % 3 == 0) {
-			std::cout << "  .";
-		}
-		else {
-			std::cout << ".  ";
-		}
-		std::cout << " completed: " << int(((float)lineCounter / (float) ny) * 100.0) << "%\n";
 
+		if (lineCounter == ny - 1) {
+			std::cout << "_____________________________\n";
+			std::cout << "RENDERING ... completed: 100%\n";
+		} else {
+			std::cout << "RENDERING ";
+			if (lineCounter % 2 == 0) {
+				std::cout << " . ";
+			}
+			else if (lineCounter % 3 == 0) {
+				std::cout << "  .";
+			}
+			else {
+				std::cout << ".  ";
+			}
+			std::cout << " completed: " << int(((float)lineCounter / (float)ny) * 100.0) << "%\n";
+		}
+
+		rendered = shared_ptr<ofTexture>(new ofTexture);
+		rendered->allocate(renderedPixels);
 		lineCounter++;
 	}
-	std::cout << "RENDERING ... completed: 100%";
-
-	rendered = shared_ptr<ofTexture>(new ofTexture);
-	rendered->allocate(renderedPixels);
-}
-
-//--------------------------------------------------------------
-void ofApp::update(){
 
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	ofBackground(128, 128, 128);
-	ofSetColor(255, 255, 255, 255);
+	ofBackground(0);
 
 	rendered->draw(0, 0);
 }
