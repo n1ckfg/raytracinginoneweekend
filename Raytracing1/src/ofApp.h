@@ -24,9 +24,4 @@ class ofApp : public ofBaseApp{
 		ofPixels renderedPixels;
 		shared_ptr<ofTexture> rendered;
 
-		int nx;
-		int ny;
-		int ns;
-		int lineCounter;
-
 };
