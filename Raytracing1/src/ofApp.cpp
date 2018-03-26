@@ -34,10 +34,11 @@ void ofApp::setup(){
 
 	camera cam(lookfrom, lookat, vec3(0, 1, 0), 20, float(nx) / float(ny), aperture, dist_to_focus);
 
-	percentCounter = 0;
+	lineCounter = 0;
 	renderedPixels.allocate(nx, ny, OF_PIXELS_RGBA);
 
-	for (int j = 0; j < ny; j++) {
+	while (lineCounter < ny) {
+		int j = lineCounter;
 		for (int i = 0; i < nx; i++) {
 			vec3 col(0, 0, 0);
 			for (int s = 0; s < ns; s++) {
@@ -55,31 +56,21 @@ void ofApp::setup(){
 			col[2] *= 255.99;
 
 			renderedPixels.setColor(i, j, ofColor(col[0], col[1], col[2]));
-
-			int loc = i + j * nx;
-			std::cout << "RENDERING ";
-			if (loc % 2 == 0) {
-				std::cout << " . ";
-			}
-			else if (loc % 3 == 0) {
-				std::cout << "  .";
-			}
-			else {
-				std::cout << ".  ";
-			}
-			std::cout << " completed: " << int((percentCounter / (float)(ny * nx)) * 100.0) << "% ";
-			if (loc % 2 == 0) {
-				std::cout << " . ";
-			}
-			else if (loc % 3 == 0) {
-				std::cout << ".  ";
-			}
-			else {
-				std::cout << "  .";
-			}
-			std::cout << " color: (" << int(col[0]) << ", " << int(col[1]) << ", " << int(col[2]) << ") \n";
-			percentCounter++;
 		}
+		
+		std::cout << "RENDERING ";
+		if (lineCounter % 2 == 0) {
+			std::cout << " . ";
+		}
+		else if (lineCounter % 3 == 0) {
+			std::cout << "  .";
+		}
+		else {
+			std::cout << ".  ";
+		}
+		std::cout << " completed: " << int(((float)lineCounter / (float) ny) * 100.0) << "%\n";
+
+		lineCounter++;
 	}
 	std::cout << "RENDERING ... completed: 100%";
 

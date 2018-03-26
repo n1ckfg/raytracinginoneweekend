@@ -27,6 +27,6 @@ class ofApp : public ofBaseApp{
 		int nx;
 		int ny;
 		int ns;
-		float percentCounter;
+		int lineCounter;
 
 };
