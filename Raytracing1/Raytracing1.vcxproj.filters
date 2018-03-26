@@ -47,6 +47,9 @@
     <ClInclude Include="src\vec3.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\util.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />

@@ -1,12 +1,10 @@
 #pragma once
 
 #include "ofMain.h"
-#include "vec3.h"
 
 class ofApp : public ofBaseApp{
 
 	public:
-		ofApp(vector <vec3> _points);
 		void setup();
 		void update();
 		void draw();
@@ -23,9 +21,12 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
-		int width;
-		int height;
 		ofPixels renderedPixels;
 		shared_ptr<ofTexture> rendered;
-		vector <vec3> points;
+
+		int nx;
+		int ny;
+		int ns;
+		float percentCounter;
+
 };
