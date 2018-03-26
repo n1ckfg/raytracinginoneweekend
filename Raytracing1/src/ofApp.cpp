@@ -38,6 +38,7 @@ void ofApp::setup() {
 	worldList = random_scene();
 
 	renderedPixels.allocate(nx, ny, OF_PIXELS_RGBA);
+	rendered = shared_ptr<ofTexture>(new ofTexture);
 }
 
 //--------------------------------------------------------------
@@ -69,6 +70,8 @@ void ofApp::update() {
 			renderedPixels.setColor(i, j, ofColor(col[0], col[1], col[2]));
 		}
 
+		rendered->allocate(renderedPixels);
+
 		if (lineCounter == ny - 1) {
 			ofImage img;
 			img.setFromPixels(renderedPixels);
@@ -87,14 +90,12 @@ void ofApp::update() {
 			else {
 				std::cout << ".  ";
 			}
+
 			std::cout << " completed: " << int(((float)lineCounter / (float)ny) * 100.0) << "%\n";
 		}
 
-		rendered = shared_ptr<ofTexture>(new ofTexture);
-		rendered->allocate(renderedPixels);
 		lineCounter++;
 	}
-
 }
 
 //--------------------------------------------------------------
